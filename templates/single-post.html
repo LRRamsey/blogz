@@ -2,9 +2,17 @@
 
 {% block content %}
     
-        
+
         <h1>{{blog_query.title}}</h1>
             <p>{{blog_query.body}}</p>
+        
+           
+            
+            <p>Written by 
+                    <a href='/blog?user={{blog_query.owner.id}}'>{{blog_query.owner.username}}</a>
+            </p>
+                
+            
        
 
 {% endblock %}

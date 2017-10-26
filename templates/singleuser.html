@@ -2,11 +2,14 @@
 
 {% block content %}
 
-{% for blog in blogs %}
-<h2>
-<a href='/blog?id={{blog.owner.id}}'>{{blog.title}}</a>
+{% for blog in all_blog %}
+
+    <h1>{{blog.username}}</h1>
+    <h1>{{blog.title}}</h1>
     <p>{{blog.body}}</p>
-</h2>
+    <p>Written by 
+            <a href='/blog?user={{blog.owner.id}}'>{{blog.owner.username}}</a>
+    </p>
 
     
 {% endfor %}

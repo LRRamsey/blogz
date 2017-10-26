@@ -128,29 +128,36 @@ def logout():
 #
 #
 
-#TODO make index an index of authors, possibly using the blog class not the user class,
-#the same i got the written by section to work
-@app.route('/')
-@app.route('/index', methods=['POST', 'GET'])
+#TODO look into renaming all the blog related content to user related content
+#@app.route('/')
+@app.route('/index', methods=['GET'])
 def index():
-    if request.args:
-        blog_id = request.args.get('id')
-        blog_query = Blog.query.get(blog_id)
-        return render_template('singleuser.html', blog_query=blog_query)
-    else:
-        blogs = Blog.query.all()
-        return render_template('index.html', blogs=blogs)
+
+    
+    users = User.query.all()
+    return render_template('index.html', title='title', users=users)
 
 
-@app.route('/blog', methods=['POST', 'GET'])
+@app.route('/blog', methods=['GET'])
 def blog():
-    if request.args:
+    if request.args.get('id'):
         blog_id = request.args.get('id')
         blog_query = Blog.query.get(blog_id)
         return render_template('single-post.html', blog_query=blog_query)
+
+    elif request.args.get('user'):
+        user_id = request.args.get('user')
+        user_query = User.query.get(user_id)
+        all_blog = Blog.query.filter_by(owner=user_query).all()
+        return render_template('singleuser.html', all_blog=all_blog)
+
     else:
         blogs = Blog.query.all()
         return render_template('blog.html', blogs=blogs)
+
+#@app.route('/singleuser', methods['POST', 'GET'])
+#def singleuser():
+
 
     
 @app.route('/newpost', methods=['POST', 'GET'])
